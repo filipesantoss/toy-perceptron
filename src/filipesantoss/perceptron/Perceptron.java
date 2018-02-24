@@ -11,7 +11,7 @@ public class Perceptron {
     private static final int MINIMUM_WEIGHT = -1;
     private static final int MAXIMUM_WEIGHT = 1;
     private static final int TOTAL_WEIGHTS = 3;
-    private static final float LEARNING_RATE = 0.02f;
+    private static final float LEARNING_RATE = 0.01f;
 
     private List<Float> weights;
 
