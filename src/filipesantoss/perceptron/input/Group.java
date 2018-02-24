@@ -1,4 +1,4 @@
-package filipesantoss.perceptron.util;
+package filipesantoss.perceptron.input;
 
 public enum Group {
     FIRST(1),

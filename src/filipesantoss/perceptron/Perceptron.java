@@ -1,6 +1,6 @@
 package filipesantoss.perceptron;
 
-import filipesantoss.perceptron.util.Group;
+import filipesantoss.perceptron.input.Group;
 import filipesantoss.perceptron.util.Random;
 
 import java.util.LinkedList;
@@ -53,7 +53,7 @@ public class Perceptron {
      * @param inputs - the input values.
      * @param answer the known correct prediction.
      */
-    public void teach(List<Float> inputs, Group answer) {
+    public void learn(List<Float> inputs, Group answer) {
         Group prediction = predict(inputs);
         int error = answer.asInt() - prediction.asInt();
 

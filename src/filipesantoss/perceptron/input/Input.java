@@ -1,7 +1,5 @@
 package filipesantoss.perceptron.input;
 
-import filipesantoss.perceptron.util.Group;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,7 +19,6 @@ public class Input {
         this.column = column;
         this.row = row;
         bias = Group.FIRST;
-        group = row < column ? Group.FIRST : Group.SECOND;
     }
 
     public List<Float> valuesAsList() {
@@ -46,4 +43,16 @@ public class Input {
     public Group getGroup() {
         return group;
     }
+
+    public void defineGroup(Group group) {
+        if (this.group == null) {
+            this.group = group;
+        }
+    }
+
+    public static Group findGroup(Input input) {
+        return input.column >= input.row ? Group.FIRST : Group.SECOND;
+    }
+
+
 }

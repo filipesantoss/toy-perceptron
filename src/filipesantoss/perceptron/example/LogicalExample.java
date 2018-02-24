@@ -3,7 +3,7 @@ package filipesantoss.perceptron.example;
 import filipesantoss.perceptron.Perceptron;
 import filipesantoss.perceptron.input.Input;
 import filipesantoss.perceptron.input.InputFactory;
-import filipesantoss.perceptron.util.Group;
+import filipesantoss.perceptron.input.Group;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -58,9 +58,7 @@ public class LogicalExample {
         System.out.println("Teaching...");
 
         for (Input input : trainingData) {
-            perceptron.teach(input.valuesAsList(), input.getGroup());
+            perceptron.learn(input.valuesAsList(), input.getGroup());
         }
     }
-
-
 }
