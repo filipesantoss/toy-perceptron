@@ -8,8 +8,8 @@ import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 
 public class GraphicalData extends Data implements Representable {
 
-    private static final float GRADIENT = 2f;
-    private static final float INTERCEPT = 100f;
+    private static final float GRADIENT = 2.3f;
+    private static final float INTERCEPT = 120f;
 
     private Ellipse representation;
 

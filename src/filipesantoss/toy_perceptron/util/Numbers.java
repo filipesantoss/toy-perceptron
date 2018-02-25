@@ -30,4 +30,30 @@ public class Numbers {
 
         return valueRatio * (newRange[1] - newRange[0]) + newRange[0];
     }
+
+    /**
+     * Return the Y axis value of a point with the X axis value in a line with the specified gradient and intercept.
+     * y = mx + b
+     *
+     * @param x         - the X axis value.
+     * @param gradient  - the gradient.
+     * @param intercept - the intercept.
+     * @return the Y axis value.
+     */
+    public static float linePointKnowingX(float x, float gradient, float intercept) {
+        return gradient * x + intercept;
+    }
+
+    /**
+     * Return the X axis value of a point with the Y axis value in a line with the specified gradient and intercept.
+     * x = (y - b) / m
+     *
+     * @param y         - the Y axis value.
+     * @param gradient  - the gradient.
+     * @param intercept - the intercept.
+     * @return the Y axis value.
+     */
+    public static float linePointKnowingY(float y, float gradient, float intercept) {
+        return (y - intercept) / gradient;
+    }
 }

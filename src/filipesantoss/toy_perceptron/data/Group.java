@@ -1,8 +1,8 @@
 package filipesantoss.toy_perceptron.data;
 
 public enum Group {
-    FIRST(1f),
-    SECOND(-1f);
+    FIRST(0.01f),
+    SECOND(-0.01f);
 
     /**
      * A numeric representation of the group used by the perceptron to calculate the error when in training.

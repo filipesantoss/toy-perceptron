@@ -59,7 +59,7 @@ public class Perceptron {
      * based on given inputs for which the correct prediction is known.
      *
      * @param inputs - the input values.
-     * @param answer the known correct prediction.
+     * @param answer - the known correct prediction.
      */
     public void learn(List<Float> inputs, Group answer) {
         Group prediction = predict(inputs);

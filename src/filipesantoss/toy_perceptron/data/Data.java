@@ -70,6 +70,8 @@ public class Data {
 
     /**
      * Defines the group that should categorize the specified object, based on whatever wanted function.
+     * In this implementation, the data will be categorized as in first group if the row value is higher
+     * than the column value, and as in the second group otherwise.
      *
      * @param data - the object.
      * @return the group that should categorize the specified object.
