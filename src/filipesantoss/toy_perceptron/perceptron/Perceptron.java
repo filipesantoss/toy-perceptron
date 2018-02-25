@@ -1,35 +1,38 @@
-package filipesantoss.perceptron;
+package filipesantoss.toy_perceptron.perceptron;
 
-import filipesantoss.perceptron.input.Group;
-import filipesantoss.perceptron.util.Random;
+import filipesantoss.toy_perceptron.data.Group;
+import filipesantoss.toy_perceptron.util.Random;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Perceptron {
 
-    private static final int MINIMUM_WEIGHT = -1;
-    private static final int MAXIMUM_WEIGHT = 1;
-    private static final int TOTAL_WEIGHTS = 3;
     private static final float LEARNING_RATE = 0.01f;
 
     private List<Float> weights;
+    private int numberOfInputs;
 
-    public Perceptron() {
+    public Perceptron(int numberOfInputs) {
         weights = new LinkedList<>();
+        this.numberOfInputs = numberOfInputs;
     }
 
     /**
      * Initializes random weights.
      */
     public void init() {
-        for (int i = 0; i < TOTAL_WEIGHTS; i++) {
-            weights.add(Random.createFloat(MINIMUM_WEIGHT, MAXIMUM_WEIGHT));
+        int minimumWeight = -1;
+        int maximumWeight = 1;
+
+        for (int i = 0; i < numberOfInputs; i++) {
+            weights.add(Random.createFloat(minimumWeight, maximumWeight));
         }
     }
 
     /**
-     * Predicts the group that classifies the input values based on their weighted sum.
+     * The guessing function.
+     * Predicts the group that classifies the data input based on their weighted sum.
      * If the weighted sum is a positive value, the inputs are categorized as belonging to group 1.
      * If the weighted sum is a negative value, the inputs are categorized as belonging to group 2.
      *
@@ -47,6 +50,7 @@ public class Perceptron {
     }
 
     /**
+     * The training function.
      * Adjusts the weights of the input values every time a prediction is wrong,
      * based on given inputs for which the correct prediction is known.
      *
@@ -69,6 +73,13 @@ public class Perceptron {
         }
     }
 
+    /**
+     * The activation function.
+     * Returns the prediction for which group categorizes the inputs, based on the result of the weighted sum.
+     *
+     * @param weightedSum - the weighted sum.
+     * @return the group that may categorize the inputs.
+     */
     private Group activate(float weightedSum) {
         return weightedSum >= 0 ? Group.FIRST : Group.SECOND;
     }

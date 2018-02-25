@@ -1,4 +1,4 @@
-package filipesantoss.perceptron.graphics;
+package filipesantoss.toy_perceptron.graphics;
 
 import org.academiadecodigo.simplegraphics.graphics.Color;
 

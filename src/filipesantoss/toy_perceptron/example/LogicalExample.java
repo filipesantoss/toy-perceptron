@@ -1,14 +1,14 @@
-package filipesantoss.perceptron.example;
+package filipesantoss.toyperceptron.example;
 
-import filipesantoss.perceptron.Perceptron;
-import filipesantoss.perceptron.input.Input;
-import filipesantoss.perceptron.input.InputFactory;
-import filipesantoss.perceptron.input.Group;
+import filipesantoss.toyperceptron.perceptron.Perceptron;
+import filipesantoss.toyperceptron.input.Input;
+import filipesantoss.toyperceptron.input.InputFactory;
+import filipesantoss.toyperceptron.input.Group;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class LogicalExample {
+public class LogicalExample extends AbstractExample {
 
     public static void main(String[] args) {
         LogicalExample example = new LogicalExample();
@@ -19,21 +19,23 @@ public class LogicalExample {
     private List<Input> trainingData;
     private Perceptron perceptron;
 
-    private void init(int inputNumber) {
-        perceptron = new Perceptron();
+    @Override
+    public void init(int numberOfInputs) {
+        perceptron = new Perceptron(3);
         perceptron.init();
 
         trainingData = new LinkedList<>();
 
-        for (int i = 0; i < inputNumber; i++) {
+        for (int i = 0; i < numberOfInputs; i++) {
             trainingData.add(InputFactory.random());
         }
     }
 
-    private void start(int teachingTimes) {
+    @Override
+    public void start(int numberOfTrainings) {
         predict();
 
-        for (int i = 0; i < teachingTimes; i++) {
+        for (int i = 0; i < numberOfTrainings; i++) {
             teach();
             predict();
         }
