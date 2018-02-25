@@ -1,20 +1,21 @@
 package filipesantoss.toy_perceptron.data;
 
 public enum Group {
-    FIRST(10),
-    SECOND(-10);
+    FIRST(0.1f),
+    SECOND(-0.1f);
 
     /**
      * A numeric representation of the group used by the perceptron to calculate the error while learning.
-     * This value is arbitrary, as long as it's unique for every group.
+     * This value is arbitrary, as long as one is positive and the other is negative.
+     * Values with high absolute value result in high input weight oscillation during perceptron training.
      */
-    private int intValue;
+    private float value;
 
-    Group(int intValue) {
-        this.intValue = intValue;
+    Group(float value) {
+        this.value = value;
     }
 
-    public int asInt() {
-        return intValue;
+    public float getValue() {
+        return value;
     }
 }

@@ -1,14 +1,14 @@
-package filipesantoss.toyperceptron.example;
+package filipesantoss.toy_perceptron.example;
 
-import filipesantoss.toyperceptron.perceptron.Perceptron;
-import filipesantoss.toyperceptron.input.Input;
-import filipesantoss.toyperceptron.input.InputFactory;
-import filipesantoss.toyperceptron.input.Group;
+import filipesantoss.toy_perceptron.data.Data;
+import filipesantoss.toy_perceptron.perceptron.Perceptron;
+import filipesantoss.toy_perceptron.data.DataFactory;
+import filipesantoss.toy_perceptron.data.Group;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class LogicalExample extends AbstractExample {
+public class LogicalExample {
 
     public static void main(String[] args) {
         LogicalExample example = new LogicalExample();
@@ -16,23 +16,21 @@ public class LogicalExample extends AbstractExample {
         example.start(3);
     }
 
-    private List<Input> trainingData;
+    private List<Data> trainingData;
     private Perceptron perceptron;
 
-    @Override
-    public void init(int numberOfInputs) {
-        perceptron = new Perceptron(3);
+    private void init(int numberOfInputs) {
+        perceptron = new Perceptron(3, 0.001f);
         perceptron.init();
 
         trainingData = new LinkedList<>();
 
         for (int i = 0; i < numberOfInputs; i++) {
-            trainingData.add(InputFactory.random());
+            trainingData.add(DataFactory.random());
         }
     }
 
-    @Override
-    public void start(int numberOfTrainings) {
+    private void start(int numberOfTrainings) {
         predict();
 
         for (int i = 0; i < numberOfTrainings; i++) {
@@ -45,8 +43,8 @@ public class LogicalExample extends AbstractExample {
         System.out.println("Predicting...");
         int rightPredictions = 0;
 
-        for (Input input: trainingData) {
-            Group prediction = perceptron.predict(input.valuesAsList());
+        for (Data input : trainingData) {
+            Group prediction = perceptron.predict(input.getAsList());
 
             if (prediction.equals(input.getGroup())) {
                 rightPredictions++;
@@ -59,8 +57,8 @@ public class LogicalExample extends AbstractExample {
     private void teach() {
         System.out.println("Teaching...");
 
-        for (Input input : trainingData) {
-            perceptron.learn(input.valuesAsList(), input.getGroup());
+        for (Data input : trainingData) {
+            perceptron.learn(input.getAsList(), input.getGroup());
         }
     }
 }

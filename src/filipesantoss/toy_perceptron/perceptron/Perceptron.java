@@ -8,13 +8,17 @@ import java.util.List;
 
 public class Perceptron {
 
-    private static final float LEARNING_RATE = 0.01f;
-
     private List<Float> weights;
+    /**
+     * This value is used to adjust the weights when the prediction is wrong.
+     * Lower values produce slow training but more accurate results.
+     */
+    private float learningRate;
     private int numberOfInputs;
 
-    public Perceptron(int numberOfInputs) {
+    public Perceptron(int numberOfInputs, float learningRate) {
         weights = new LinkedList<>();
+        this.learningRate = learningRate;
         this.numberOfInputs = numberOfInputs;
     }
 
@@ -22,8 +26,8 @@ public class Perceptron {
      * Initializes random weights.
      */
     public void init() {
-        int minimumWeight = -1;
-        int maximumWeight = 1;
+        int minimumWeight = -10;
+        int maximumWeight = 10;
 
         for (int i = 0; i < numberOfInputs; i++) {
             weights.add(Random.createFloat(minimumWeight, maximumWeight));
@@ -59,7 +63,7 @@ public class Perceptron {
      */
     public void learn(List<Float> inputs, Group answer) {
         Group prediction = predict(inputs);
-        int error = answer.asInt() - prediction.asInt();
+        float error = answer.getValue() - prediction.getValue();
 
         if (error == 0) {
             return;
@@ -68,7 +72,7 @@ public class Perceptron {
         for (int i = 0; i < weights.size(); i++) {
             float weight = weights.remove(i);
 
-            weight += error * inputs.get(i) * LEARNING_RATE;
+            weight += error * inputs.get(i) * learningRate;
             weights.add(i, weight);
         }
     }

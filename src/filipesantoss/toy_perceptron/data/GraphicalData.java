@@ -7,7 +7,7 @@ import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 
 public class GraphicalData extends Data implements Representable {
 
-    private static final float GRADIENT = 1f;
+    private static final float GRADIENT = 2f;
     private static final float INTERCEPT = 0f;
 
     private Ellipse representation;
@@ -24,7 +24,7 @@ public class GraphicalData extends Data implements Representable {
      */
     @Override
     public void drawAt(float x, float y) {
-        representation = new Ellipse(x, y, CartesianCanvas.SIZE, CartesianCanvas.SIZE);
+        representation = new Ellipse(x, y, CartesianCanvas.CELL_SIZE, CartesianCanvas.CELL_SIZE);
         representation.fill();
     }
 
@@ -101,18 +101,18 @@ public class GraphicalData extends Data implements Representable {
      * @return the group that categorizes the data.
      */
     public static Group findGroup(GraphicalData input, CartesianCanvas canvas) {
-        return defineByStraightLine(canvas.fromCartesianX(input)) > canvas.fromCartesianY(input) ? Group.FIRST : Group.SECOND;
+        return input.getRow() > defineByStraightLine(input.getColumn()) ? Group.FIRST : Group.SECOND;
     }
 
     /**
      * Returns the Y axis value corresponding to the X axis value in a straight line.
      * The equation for a straight line is commonly known as y = mx + b.
      *
-     * @param column - the X axis value.
+     * @param x - the X axis value.
      * @return - the Y axis value.
      */
-    private static float defineByStraightLine(float column) {
-        return column * GRADIENT + INTERCEPT;
+    public static float defineByStraightLine(float x) {
+        return GRADIENT * x + INTERCEPT;
     }
 
     /**
@@ -122,13 +122,10 @@ public class GraphicalData extends Data implements Representable {
      */
     public static void drawGroupDelimiter(CartesianCanvas canvas) {
         float columnRange = MAXIMUM_COLUMN - MINIMUM_COLUMN;
-        float rowRange = MAXIMUM_ROW - MINIMUM_ROW;
 
-        float startingX = canvas.fromCartesianX(MINIMUM_COLUMN, MINIMUM_COLUMN, columnRange);
-        float startingY = defineByStraightLine(canvas.fromCartesianY(MAXIMUM_ROW, MINIMUM_ROW, rowRange));
-        float endingX = canvas.fromCartesianX(MAXIMUM_COLUMN, MINIMUM_COLUMN, columnRange);
-        float endingY = defineByStraightLine(canvas.fromCartesianY(MINIMUM_ROW, MINIMUM_ROW, rowRange));
+        float startingX = canvas.coordinateToPixelX(MINIMUM_COLUMN, MINIMUM_COLUMN, columnRange);
+        float endingX = canvas.coordinateToPixelX(MAXIMUM_COLUMN, MINIMUM_COLUMN, columnRange);
 
-        canvas.drawLine(startingX, startingY, endingX, endingY, Color.ORANGE);
+        canvas.drawCartesianLine(startingX, endingX, GRADIENT, INTERCEPT, Color.BLACK);
     }
 }

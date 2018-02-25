@@ -39,13 +39,9 @@ public class Data {
         List<Float> values = new LinkedList<>();
         values.add(row);
         values.add(column);
-        values.add(getBiasAsFloat());
+        values.add(bias.getValue());
 
         return values;
-    }
-
-    private float getBiasAsFloat() {
-        return Integer.valueOf(bias.asInt()).floatValue();
     }
 
     public float getColumn() {
