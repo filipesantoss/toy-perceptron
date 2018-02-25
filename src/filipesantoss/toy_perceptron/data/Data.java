@@ -5,11 +5,12 @@ import java.util.List;
 
 public class Data {
 
-    // Limit values used to make other proportional representation of data.
+    // Limit values used to make other proportional representations of data.
     static final int MINIMUM_ROW = -100;
     static final int MAXIMUM_ROW = 100;
     static final int MINIMUM_COLUMN = -100;
     static final int MAXIMUM_COLUMN = 100;
+
 
     private float column;
     private float row;
@@ -17,8 +18,8 @@ public class Data {
     private Group group;
 
     /**
-     * Data represents a point in a grid that can be categorized in two groups.
-     * Each instance of Data will have a bias to a group that will be used by a perceptron when trying to classify it.
+     * Data represents a point in a cartesian grid that can be categorized in two groups.
+     * Each instance will have a bias to a group that will be used by a perceptron when trying to classify it.
      * The value of the bias is arbitrary.
      *
      * @param column - the column occupied in the grid.
@@ -74,6 +75,6 @@ public class Data {
      * @return the group that should categorize the specified object.
      */
     public static Group findGroup(Data data) {
-        return data.column >= data.row ? Group.FIRST : Group.SECOND;
+        return data.row > data.column ? Group.FIRST : Group.SECOND;
     }
 }

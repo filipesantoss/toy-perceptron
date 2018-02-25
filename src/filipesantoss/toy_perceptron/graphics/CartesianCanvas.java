@@ -1,5 +1,6 @@
 package filipesantoss.toy_perceptron.graphics;
 
+import filipesantoss.toy_perceptron.util.Numbers;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Line;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
@@ -45,23 +46,35 @@ public class CartesianCanvas {
     }
 
     public float coordinateToPixelX(Representable representable) {
-        return coordinateToPixelX(representable.getX(), representable.getMinimumX(), representable.getWidthRange());
+        return coordinateToPixelX(representable.getX(), representable.getMinimumX(), representable.getMaximumX());
     }
 
     public float coordinateToPixelY(Representable representable) {
-        return coordinateToPixelY(representable.getY(), representable.getMinimumY(), representable.getHeightRange());
+        return coordinateToPixelY(representable.getY(), representable.getMinimumY(), representable.getMaximumY());
     }
 
-    public float coordinateToPixelX(float column, float minimum, float rangeSize) {
-        float xRatio = (column - minimum) / rangeSize;
+    public float coordinateToPixelX(float column, float minimum, float maximum) {
+        float[] coordinateRange = new float[]{
+                minimum, maximum
+        };
 
-        return xRatio * canvas.getWidth() + PADDING;
+        float[] canvasRange = new float[]{
+            canvas.getX(), canvas.getWidth() + PADDING
+        };
+
+        return Numbers.mapRange(column, coordinateRange, canvasRange);
     }
 
-    public float coordinateToPixelY(float row, float minimum, float rangeSize) {
-        float yRatio = (row - minimum) / rangeSize;
+    public float coordinateToPixelY(float row, float minimum, float maximum) {
+        float[] coordinateRange = new float[]{
+                minimum, maximum
+        };
 
-        return canvas.getHeight() - yRatio * canvas.getHeight() + PADDING;
+        float[] canvasRange = new float[]{
+                canvas.getHeight() + PADDING, canvas.getY()
+        };
+
+        return Numbers.mapRange(row, coordinateRange, canvasRange);
     }
 
     public void drawLine(float startingX, float startingY, float endingX, float endingY, Color color) {
@@ -70,31 +83,33 @@ public class CartesianCanvas {
         line.draw();
     }
 
-    public void drawCartesianLine(float initialX, float finalX, float gradient, float intercept, Color color) {
-        initialX = pixelXtoCartesianX(initialX - PADDING);
-        finalX = pixelXtoCartesianX(finalX - PADDING);
+    // TODO: REFACTOR THIS
+    public void drawCartesianLine(float initialPixelX, float finalPixelX, float gradient, float intercept, Color color) {
+        initialPixelX = pixelXtoCartesianX(initialPixelX - PADDING);
+        finalPixelX = pixelXtoCartesianX(finalPixelX - PADDING);
 
-        float initialY = straightLineKnowingX(initialX, gradient, intercept);
+        float initialY = straightLineKnowingX(initialPixelX, gradient, intercept);
 
         if (initialY < -centralPoint) {
-            initialX = straightLineKnowingY(-centralPoint, gradient, intercept);
-            initialY = straightLineKnowingX(initialX, gradient, intercept);
+            initialPixelX = straightLineKnowingY(-centralPoint, gradient, intercept);
+            initialY = straightLineKnowingX(initialPixelX, gradient, intercept);
         }
 
-        initialX = cartesianXToPixelX(initialX) + PADDING;
+        initialPixelX = cartesianXToPixelX(initialPixelX) + PADDING;
         initialY = cartesianYToPixelY(initialY) + PADDING;
 
-        float finalY = straightLineKnowingX(finalX, gradient, intercept);
+
+        float finalY = straightLineKnowingX(finalPixelX, gradient, intercept);
 
         if (finalY > centralPoint) {
-            finalX = straightLineKnowingY(centralPoint, gradient, intercept);
-            finalY = straightLineKnowingX(finalX, gradient, intercept);
+            finalPixelX = straightLineKnowingY(centralPoint, gradient, intercept);
+           finalY = straightLineKnowingX(finalPixelX, gradient, intercept);
         }
 
-        finalX = cartesianXToPixelX(finalX) + PADDING;
+        finalPixelX = cartesianXToPixelX(finalPixelX) + PADDING;
         finalY = cartesianYToPixelY(finalY) + PADDING;
 
-        drawLine(initialX, initialY, finalX, finalY, color);
+        drawLine(initialPixelX, initialY, finalPixelX, finalY, color);
     }
 
     private float straightLineKnowingX(float x, float gradient, float intercept) {
@@ -123,5 +138,13 @@ public class CartesianCanvas {
 
     public static void paint(Representable representable, Color color) {
         representable.setColor(color);
+    }
+
+    public float getMinimum() {
+        return -centralPoint;
+    }
+
+    public float getMaximum() {
+        return centralPoint;
     }
 }

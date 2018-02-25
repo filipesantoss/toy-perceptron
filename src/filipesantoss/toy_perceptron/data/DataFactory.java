@@ -1,7 +1,7 @@
 package filipesantoss.toy_perceptron.data;
 
 import filipesantoss.toy_perceptron.graphics.CartesianCanvas;
-import filipesantoss.toy_perceptron.util.Random;
+import filipesantoss.toy_perceptron.util.Numbers;
 
 public class DataFactory {
 
@@ -19,9 +19,8 @@ public class DataFactory {
 
     /**
      * Returns a drawable Data instance with random values and a defined group that categorizes it,
-     * based on its' representation on a canvas.
+     * based on its' representation on a cartesian grid.
      *
-     * @param canvas - the canvas used for group definition.
      * @return the instance.
      */
     public static GraphicalData randomRepresentable(CartesianCanvas canvas) {
@@ -32,10 +31,10 @@ public class DataFactory {
     }
 
     private static float randomRow() {
-        return Random.createFloat(Data.MINIMUM_ROW, Data.MAXIMUM_ROW);
+        return Numbers.createFloat(Data.MINIMUM_ROW, Data.MAXIMUM_ROW);
     }
 
     private static float randomColumn() {
-        return Random.createFloat(Data.MINIMUM_COLUMN, Data.MAXIMUM_COLUMN);
+        return Numbers.createFloat(Data.MINIMUM_COLUMN, Data.MAXIMUM_COLUMN);
     }
 }

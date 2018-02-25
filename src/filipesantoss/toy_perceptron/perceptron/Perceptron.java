@@ -1,19 +1,19 @@
 package filipesantoss.toy_perceptron.perceptron;
 
 import filipesantoss.toy_perceptron.data.Group;
-import filipesantoss.toy_perceptron.util.Random;
+import filipesantoss.toy_perceptron.util.Numbers;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Perceptron {
 
-    private List<Float> weights;
     /**
-     * This value is used to adjust the weights when the prediction is wrong.
-     * Lower values produce slow training but more accurate results.
+     * The learningRate value is used to adjust the weights when the preceptor's prediction is wrong.
+     * Lower values produce slow training but more accurate answers.
      */
     private float learningRate;
+    private List<Float> weights;
     private int numberOfInputs;
 
     public Perceptron(int numberOfInputs, float learningRate) {
@@ -23,20 +23,20 @@ public class Perceptron {
     }
 
     /**
-     * Initializes random weights.
+     * Initializes random weights between defined values.
      */
     public void init() {
         int minimumWeight = -10;
         int maximumWeight = 10;
 
         for (int i = 0; i < numberOfInputs; i++) {
-            weights.add(Random.createFloat(minimumWeight, maximumWeight));
+            weights.add(Numbers.createFloat(minimumWeight, maximumWeight));
         }
     }
 
     /**
      * The guessing function.
-     * Predicts the group that classifies the data input based on their weighted sum.
+     * Predicts the group that classifies the inputs based on their weighted sum.
      * If the weighted sum is a positive value, the inputs are categorized as belonging to group 1.
      * If the weighted sum is a negative value, the inputs are categorized as belonging to group 2.
      *

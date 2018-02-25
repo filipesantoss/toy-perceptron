@@ -14,9 +14,9 @@ public interface Representable {
 
     int getMinimumX();
 
-    int getWidthRange();
+    int getMaximumX();
 
     int getMinimumY();
 
-    int getHeightRange();
+    int getMaximumY();
 }

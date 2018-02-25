@@ -2,13 +2,14 @@ package filipesantoss.toy_perceptron.data;
 
 import filipesantoss.toy_perceptron.graphics.CartesianCanvas;
 import filipesantoss.toy_perceptron.graphics.Representable;
+import filipesantoss.toy_perceptron.util.Numbers;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 
 public class GraphicalData extends Data implements Representable {
 
     private static final float GRADIENT = 2f;
-    private static final float INTERCEPT = 0f;
+    private static final float INTERCEPT = 100f;
 
     private Ellipse representation;
 
@@ -44,8 +45,8 @@ public class GraphicalData extends Data implements Representable {
      * @return - the number of values.
      */
     @Override
-    public int getWidthRange() {
-        return MAXIMUM_COLUMN - MINIMUM_COLUMN;
+    public int getMaximumX() {
+        return MAXIMUM_COLUMN;
     }
 
     /**
@@ -64,8 +65,8 @@ public class GraphicalData extends Data implements Representable {
      * @return - the number of values.
      */
     @Override
-    public int getHeightRange() {
-        return MAXIMUM_ROW - MINIMUM_ROW;
+    public int getMaximumY() {
+        return MAXIMUM_ROW;
     }
 
     /**
@@ -94,14 +95,18 @@ public class GraphicalData extends Data implements Representable {
     }
 
     /**
-     * Defines the group that categorizes the data based on its representation's coordinates on the canvas.
+     * Defines the group that categorizes the data based on its coordinates on the cartesian canvas.
+     * In this implementation, the data will be categorized as in first group if it's above a straight line,
+     * and as in the second group otherwise.
      *
      * @param input  - the data to be categorized.
-     * @param canvas - the canvas used to calculate the coordinates.
+     * @param canvas - the canvas to be used.
      * @return the group that categorizes the data.
      */
     public static Group findGroup(GraphicalData input, CartesianCanvas canvas) {
-        return input.getRow() > defineByStraightLine(input.getColumn()) ? Group.FIRST : Group.SECOND;
+        float threshold = defineByStraightLine(input.getColumn(), input, canvas);
+
+        return input.getRow() > threshold ? Group.FIRST : Group.SECOND;
     }
 
     /**
@@ -111,20 +116,27 @@ public class GraphicalData extends Data implements Representable {
      * @param x - the X axis value.
      * @return - the Y axis value.
      */
-    public static float defineByStraightLine(float x) {
-        return GRADIENT * x + INTERCEPT;
+    private static float defineByStraightLine(float x, GraphicalData data, CartesianCanvas canvas) {
+        float[] rowRange = new float[]{
+                data.getMinimumY(), data.getMaximumY()
+        };
+
+        float[] canvasRange = new float[]{
+                canvas.getMinimum(), canvas.getMaximum()
+        };
+
+        return GRADIENT * x + Numbers.mapRange(INTERCEPT, canvasRange, rowRange);
     }
 
     /**
-     * Creates a line representing the groups' threshold values in a canvas.
+     * Creates a line representing the groups' threshold values in a cartesian canvas,
+     * using the minimum and maximum column values.
      *
      * @param canvas - the canvas to be used.
      */
     public static void drawGroupDelimiter(CartesianCanvas canvas) {
-        float columnRange = MAXIMUM_COLUMN - MINIMUM_COLUMN;
-
-        float startingX = canvas.coordinateToPixelX(MINIMUM_COLUMN, MINIMUM_COLUMN, columnRange);
-        float endingX = canvas.coordinateToPixelX(MAXIMUM_COLUMN, MINIMUM_COLUMN, columnRange);
+        float startingX = canvas.coordinateToPixelX(MINIMUM_COLUMN, MINIMUM_COLUMN, MAXIMUM_COLUMN);
+        float endingX = canvas.coordinateToPixelX(MAXIMUM_COLUMN, MINIMUM_COLUMN, MAXIMUM_COLUMN);
 
         canvas.drawCartesianLine(startingX, endingX, GRADIENT, INTERCEPT, Color.BLACK);
     }
