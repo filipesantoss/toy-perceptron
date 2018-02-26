@@ -32,8 +32,8 @@ public class Numbers {
     }
 
     /**
-     * Return the Y axis value of a point with the X axis value in a line with the specified gradient and intercept.
-     * y = mx + b
+     * Returns the Y axis value of a point with the X axis value in a line with the specified gradient and intercept.
+     * y = m * x + b
      *
      * @param x         - the X axis value.
      * @param gradient  - the gradient.
@@ -45,7 +45,7 @@ public class Numbers {
     }
 
     /**
-     * Return the X axis value of a point with the Y axis value in a line with the specified gradient and intercept.
+     * Returns the X axis value of a point with the Y axis value in a line with the specified gradient and intercept.
      * x = (y - b) / m
      *
      * @param y         - the Y axis value.

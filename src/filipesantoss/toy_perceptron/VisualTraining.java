@@ -33,7 +33,6 @@ public class VisualTraining {
     private List<GraphicalData> trainingData;
     private Perceptron perceptron;
 
-
     private VisualTraining(int size) {
         this.canvas = new CartesianCanvas(size);
     }

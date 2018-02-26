@@ -30,9 +30,7 @@ public class GraphicalData extends Data implements Representable {
     }
 
     /**
-     * Returns the minimum possible value used to calculate the representation's X axis value.
-     *
-     * @return - the minimum value.
+     * @see Representable#getMinimumX()
      */
     @Override
     public int getMinimumX() {
@@ -40,9 +38,7 @@ public class GraphicalData extends Data implements Representable {
     }
 
     /**
-     * Returns the total number of values that can be used to calculate the representation's X axis value.
-     *
-     * @return - the number of values.
+     * @see Representable#getMaximumX()
      */
     @Override
     public int getMaximumX() {
@@ -50,9 +46,7 @@ public class GraphicalData extends Data implements Representable {
     }
 
     /**
-     * Returns the minimum possible value used to calculate the representation's Y axis value.
-     *
-     * @return - the minimum value.
+     * @see Representable#getMinimumY()
      */
     @Override
     public int getMinimumY() {
@@ -60,19 +54,16 @@ public class GraphicalData extends Data implements Representable {
     }
 
     /**
-     * Returns the total number of values that can be used to calculate the representation's Y axis value.
-     *
-     * @return - the number of values.
+     * @see Representable#getMaximumY()
      */
     @Override
     public int getMaximumY() {
         return MAXIMUM_ROW;
     }
 
+
     /**
-     * Returns the value used to calculate the real representation's X axis value.
-     *
-     * @return - the value to be used.
+     * @see Representable#getX()
      */
     @Override
     public float getX() {
@@ -80,9 +71,7 @@ public class GraphicalData extends Data implements Representable {
     }
 
     /**
-     * Returns the value used to calculate the real representation's Y axis value.
-     *
-     * @return - the value to be used.
+     * @see Representable#getX()
      */
     @Override
     public float getY() {
@@ -122,7 +111,7 @@ public class GraphicalData extends Data implements Representable {
         };
 
         float[] canvasRange = new float[]{
-                canvas.getMinimum(), canvas.getMaximum()
+                canvas.getMinimumCartesian(), canvas.getMaximumCartesian()
         };
 
         return GRADIENT * x + Numbers.mapRange(INTERCEPT, canvasRange, rowRange);
