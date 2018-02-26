@@ -6,6 +6,8 @@ import org.academiadecodigo.simplegraphics.graphics.Line;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 
+import java.util.function.ToDoubleBiFunction;
+
 public class CartesianCanvas {
 
     private static final int PADDING = 10;
@@ -26,19 +28,21 @@ public class CartesianCanvas {
     /**
      * Initializes the canvas and the text box and draws the X and Y axis.
      */
+    // TODO: REFACTOR
     public void init() {
         canvas.setColor(Color.GRAY);
         canvas.fill();
 
         text.draw();
 
+        float centralPixel = centralPoint + PADDING;
         int left = canvas.getX();
         int right = canvas.getWidth() + PADDING;
         int top = canvas.getY();
         int bottom = canvas.getHeight() + PADDING;
 
-        drawLine(left, centralPoint + PADDING, right, centralPoint + PADDING, Color.WHITE);
-        drawLine(centralPoint + PADDING, top, centralPoint + PADDING, bottom, Color.WHITE);
+        drawLine(left, centralPixel, right, centralPixel, Color.WHITE);
+        drawLine(centralPixel, top, centralPixel, bottom, Color.WHITE);
     }
 
     /**
@@ -89,7 +93,7 @@ public class CartesianCanvas {
      * @param maximum - the value for the maximum possible row.
      * @return the pixel's Y value.
      */
-    public float coordinateToPixelY(float row, float minimum, float maximum) {
+    private float coordinateToPixelY(float row, float minimum, float maximum) {
         float[] coordinateRange = new float[]{
                 minimum, maximum
         };
@@ -101,22 +105,15 @@ public class CartesianCanvas {
         return Numbers.mapRange(row, coordinateRange, canvasRange);
     }
 
-    public void drawLine(float startingX, float startingY, float endingX, float endingY, Color color) {
+    // TODO: REFACTOR
+    private void drawLine(float startingX, float startingY, float endingX, float endingY, Color color) {
         Line line = new Line(startingX, startingY, endingX, endingY);
         line.setColor(color);
         line.draw();
     }
 
-    /**
-     * Draws a line from one X axis value to the other, with the specified gradient and intercept.
-     *
-     * @param initialPixelX - the first pixel's X axis value.
-     * @param finalPixelX   - the second pixel's X axis value.
-     * @param gradient      - the line's gradient.
-     * @param intercept     - the line's intercept .
-     * @param color         - the line's color.
-     */
-    public void drawCartesianLine(float initialPixelX, float finalPixelX, float gradient, float intercept, Color color) {
+    // TODO: REFACTOR. POINT VALIDATOR?
+    public void drawCartesianLine(float initialPixelX, float finalPixelX, float gradient, float intercept) {
         float initialX = initialPixelX - PADDING - centralPoint;
         float initialY = Numbers.linePointKnowingX(initialX, gradient, intercept);
 
@@ -139,7 +136,7 @@ public class CartesianCanvas {
         finalPixelX = cartesianXToPixelX(finalX) + PADDING;
         float finalPixelY = cartesianYToPixelY(finalY) + PADDING;
 
-        drawLine(initialPixelX, initialPixelY, finalPixelX, finalPixelY, color);
+        drawLine(initialPixelX, initialPixelY, finalPixelX, finalPixelY, Color.BLACK);
     }
 
     private float cartesianXToPixelX(float cartesianX) {

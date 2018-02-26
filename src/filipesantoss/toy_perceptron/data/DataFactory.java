@@ -1,6 +1,7 @@
 package filipesantoss.toy_perceptron.data;
 
 import filipesantoss.toy_perceptron.graphics.CartesianCanvas;
+import filipesantoss.toy_perceptron.graphics.GraphicalData;
 import filipesantoss.toy_perceptron.util.Numbers;
 
 public class DataFactory {
@@ -25,6 +26,13 @@ public class DataFactory {
      */
     public static GraphicalData randomRepresentable(CartesianCanvas canvas) {
         GraphicalData toReturn = new GraphicalData(randomColumn(), randomRow());
+        toReturn.defineGroup(GraphicalData.findGroup(toReturn, canvas));
+
+        return toReturn;
+    }
+
+    public static GraphicalData createGraphicalData(int column, int row, CartesianCanvas canvas) {
+        GraphicalData toReturn = new GraphicalData(column, row);
         toReturn.defineGroup(GraphicalData.findGroup(toReturn, canvas));
 
         return toReturn;

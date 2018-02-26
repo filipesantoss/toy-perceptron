@@ -6,10 +6,10 @@ import java.util.List;
 public class Data {
 
     // Limit values used to make other proportional representations of data.
-    static final int MINIMUM_ROW = -100;
-    static final int MAXIMUM_ROW = 100;
-    static final int MINIMUM_COLUMN = -100;
-    static final int MAXIMUM_COLUMN = 100;
+    public static final int MINIMUM_ROW = -100;
+    public static final int MAXIMUM_ROW = 100;
+    public static final int MINIMUM_COLUMN = -100;
+    public static final int MAXIMUM_COLUMN = 100;
 
 
     private float column;
@@ -25,7 +25,7 @@ public class Data {
      * @param column - the column occupied in the grid.
      * @param row    - the row occupied in the grid.
      */
-    Data(float column, float row) {
+    public Data(float column, float row) {
         this.column = column;
         this.row = row;
         bias = Group.FIRST;
@@ -38,11 +38,15 @@ public class Data {
      */
     public List<Float> getAsList() {
         List<Float> values = new LinkedList<>();
-        values.add(row);
         values.add(column);
-        values.add(bias.getValue());
+        values.add(row);
+        values.add(getBias());
 
         return values;
+    }
+
+    public float getBias() {
+        return bias.getValue();
     }
 
     public float getColumn() {

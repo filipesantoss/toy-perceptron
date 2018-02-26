@@ -1,15 +1,15 @@
-package filipesantoss.toy_perceptron.data;
+package filipesantoss.toy_perceptron.graphics;
 
-import filipesantoss.toy_perceptron.graphics.CartesianCanvas;
-import filipesantoss.toy_perceptron.graphics.Representable;
+import filipesantoss.toy_perceptron.data.Data;
+import filipesantoss.toy_perceptron.data.Group;
 import filipesantoss.toy_perceptron.util.Numbers;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 
 public class GraphicalData extends Data implements Representable {
 
-    private static final float GRADIENT = 2.3f;
-    private static final float INTERCEPT = 120f;
+    private static final float GRADIENT = 1.43f;
+    private static final float INTERCEPT = -42.5f;
 
     private Ellipse representation;
 
@@ -26,6 +26,7 @@ public class GraphicalData extends Data implements Representable {
     @Override
     public void drawAt(float x, float y) {
         representation = new Ellipse(x, y, CartesianCanvas.CELL_SIZE, CartesianCanvas.CELL_SIZE);
+        representation.delete();
         representation.fill();
     }
 
@@ -127,6 +128,6 @@ public class GraphicalData extends Data implements Representable {
         float startingX = canvas.coordinateToPixelX(MINIMUM_COLUMN, MINIMUM_COLUMN, MAXIMUM_COLUMN);
         float endingX = canvas.coordinateToPixelX(MAXIMUM_COLUMN, MINIMUM_COLUMN, MAXIMUM_COLUMN);
 
-        canvas.drawCartesianLine(startingX, endingX, GRADIENT, INTERCEPT, Color.BLACK);
+        canvas.drawCartesianLine(startingX, endingX, GRADIENT, INTERCEPT);
     }
 }

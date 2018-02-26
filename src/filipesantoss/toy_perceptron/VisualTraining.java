@@ -1,10 +1,10 @@
 package filipesantoss.toy_perceptron;
 
-import filipesantoss.toy_perceptron.data.GraphicalData;
-import filipesantoss.toy_perceptron.perceptron.Perceptron;
+import filipesantoss.toy_perceptron.graphics.GraphicalData;
 import filipesantoss.toy_perceptron.graphics.CartesianCanvas;
 import filipesantoss.toy_perceptron.data.DataFactory;
 import filipesantoss.toy_perceptron.data.Group;
+import filipesantoss.toy_perceptron.perceptron.Perceptron;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 
 import java.util.LinkedList;
@@ -16,7 +16,7 @@ public class VisualTraining {
         try {
             VisualTraining example = new VisualTraining(50);
             example.init(400);
-            example.start(20);
+            example.start(30);
 
         } catch (InterruptedException e) {
             System.err.println(e.getMessage());
@@ -38,7 +38,7 @@ public class VisualTraining {
     }
 
     private void init(int numberOfInputs) throws InterruptedException {
-        perceptron = new Perceptron(3, 0.01f);
+        perceptron = new Perceptron(3, 0.1f);
         perceptron.init();
 
         canvas.init();
@@ -93,7 +93,8 @@ public class VisualTraining {
         for (GraphicalData input : trainingData) {
             perceptron.learn(input.getAsList(), input.getGroup());
 
-            Thread.sleep(5);
+            Thread.sleep(10);
         }
+
     }
 }
