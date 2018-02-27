@@ -6,8 +6,6 @@ import org.academiadecodigo.simplegraphics.graphics.Line;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 
-import java.util.function.ToDoubleBiFunction;
-
 public class CartesianCanvas {
 
     private static final int PADDING = 10;
@@ -19,7 +17,7 @@ public class CartesianCanvas {
 
     public CartesianCanvas(int size) {
         canvas = new Rectangle(PADDING, PADDING, size * CELL_SIZE, size * CELL_SIZE);
-        centralPoint = size * CELL_SIZE / 2;
+        centralPoint = size / 2 * CELL_SIZE;
 
         //Center text horizontally.
         text = new Text(centralPoint - 2 * PADDING, canvas.getHeight() + 2 * PADDING, "");
@@ -28,21 +26,23 @@ public class CartesianCanvas {
     /**
      * Initializes the canvas and the text box and draws the X and Y axis.
      */
-    // TODO: REFACTOR
     public void init() {
         canvas.setColor(Color.GRAY);
         canvas.fill();
 
+        drawAxis();
         text.draw();
+    }
 
-        float centralPixel = centralPoint + PADDING;
-        int left = canvas.getX();
-        int right = canvas.getWidth() + PADDING;
-        int top = canvas.getY();
-        int bottom = canvas.getHeight() + PADDING;
+    private void drawAxis() {
+        float[] left = {PADDING, centralPoint + PADDING};
+        float[] right = {canvas.getWidth() + PADDING, centralPoint + PADDING};
 
-        drawLine(left, centralPixel, right, centralPixel, Color.WHITE);
-        drawLine(centralPixel, top, centralPixel, bottom, Color.WHITE);
+        float[] top = {centralPoint + PADDING, PADDING};
+        float[] bottom = {centralPoint + PADDING, canvas.getHeight() + PADDING};
+
+        drawLine(left, right, Color.WHITE);
+        drawLine(top, bottom, Color.WHITE);
     }
 
     /**
@@ -74,13 +74,8 @@ public class CartesianCanvas {
      * @return the pixel's X value.
      */
     public float coordinateToPixelX(float column, float minimum, float maximum) {
-        float[] coordinateRange = new float[]{
-                minimum, maximum
-        };
-
-        float[] canvasRange = new float[]{
-                canvas.getX(), canvas.getWidth() + PADDING
-        };
+        float[] coordinateRange = {minimum, maximum};
+        float[] canvasRange = {canvas.getX(), canvas.getWidth() + PADDING};
 
         return Numbers.mapRange(column, coordinateRange, canvasRange);
     }
@@ -94,20 +89,14 @@ public class CartesianCanvas {
      * @return the pixel's Y value.
      */
     private float coordinateToPixelY(float row, float minimum, float maximum) {
-        float[] coordinateRange = new float[]{
-                minimum, maximum
-        };
-
-        float[] canvasRange = new float[]{
-                canvas.getHeight() + PADDING, canvas.getY()
-        };
+        float[] coordinateRange = {minimum, maximum};
+        float[] canvasRange = {canvas.getHeight() + PADDING, canvas.getY()};
 
         return Numbers.mapRange(row, coordinateRange, canvasRange);
     }
 
-    // TODO: REFACTOR
-    private void drawLine(float startingX, float startingY, float endingX, float endingY, Color color) {
-        Line line = new Line(startingX, startingY, endingX, endingY);
+    private void drawLine(float[] startingPixel, float[] endingPixel, Color color) {
+        Line line = new Line(startingPixel[0], startingPixel[1], endingPixel[0], endingPixel[1]);
         line.setColor(color);
         line.draw();
     }
@@ -136,7 +125,7 @@ public class CartesianCanvas {
         finalPixelX = cartesianXToPixelX(finalX) + PADDING;
         float finalPixelY = cartesianYToPixelY(finalY) + PADDING;
 
-        drawLine(initialPixelX, initialPixelY, finalPixelX, finalPixelY, Color.BLACK);
+        drawLine(new float[]{initialPixelX, initialPixelY}, new float[]{finalPixelX, finalPixelY}, Color.BLACK);
     }
 
     private float cartesianXToPixelX(float cartesianX) {
