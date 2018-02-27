@@ -26,8 +26,8 @@ public class Perceptron {
      * Initializes random weights between defined values.
      */
     public void init() {
-        int minimumWeight = -10;
-        int maximumWeight = 10;
+        int minimumWeight = -1;
+        int maximumWeight = 1;
 
         for (int i = 0; i < numberOfInputs; i++) {
             weights.add(Numbers.createFloat(minimumWeight, maximumWeight));

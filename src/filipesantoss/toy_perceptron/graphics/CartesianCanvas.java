@@ -101,7 +101,6 @@ public class CartesianCanvas {
         line.draw();
     }
 
-    // TODO: REFACTOR. POINT VALIDATOR?
     public void drawCartesianLine(float initialPixelX, float finalPixelX, float gradient, float intercept) {
         float initialX = initialPixelX - PADDING - centralPoint;
         float initialY = Numbers.linePointKnowingX(initialX, gradient, intercept);
